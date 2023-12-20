@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>MySql Dump Online</title>
+    <link rel="icon" href="R.png" type="image/png">
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $("#formBackup").submit(function(e) {
+                e.preventDefault(); // Impede a submissão automática do formulário
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url_for("processar_acao") }}',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        // Faça algo com a resposta, se necessário
+                    }
+                });
+            });
+        });
+    </script>
+    
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="container">
+            <h1>Backup MySql</h1>
+            <p>Realize backups do MySql de forma WEB!</p>
+        </section>
+
+        <div class="conexao">
+            <h2>CONEXÃO MYSQL</h2>
+            <p>Dados da conexão com o banco de dados</p>
+            <form method="post" action="{{ url_for('processar_acao') }}" class="formBackup">
+                <div class="dadosBancosGerais">
+                    <div class="ip">
+                        <label for="campoIpBanco">IP do Banco:</label>
+                        <input type="text" name="ipBanco" id="campoIpBanco">
+                    </div>
+                    <div class="porta">
+                        <label for="campoPortaBanco">Porta do Banco:</label>
+                        <input type="text" name="portaBanco" id="campoPortaBanco">
+                    </div>
+                    <div class="local">
+                        <label for="campoLocalSalvar">Local para salvar:</label>
+                        <input type="text" name="campoLocalSalvar" id="campoLocalSalvar">
+                    </div>
+                    <button type="button" onclick="selecionarPasta()" name="acao" value="escolher_pasta" class="butSalvar">LOCAL SALVAR</button>
+                    <div class="nome">
+                        <label for="campoNomeBanco">Nome:</label>
+                        <input type="text" name="nomeBanco" id="campoNomeBanco">
+                    </div>
+                    <div class="usuario">
+                        <label for="campoUsuario">Usuário:</label>
+                        <input type="text" name="usuario" id="campoUsuario">
+                    </div>
+                    <div class="senha">
+                        <label for="campoSenha">Senha:</label>
+                        <input type="password" name="senha" id="campoSenha">
+                    </div>
+                    <button type="submit" name="acao" value="testar_conexao" class="testarConex">TESTAR CONEXÃO</button>
+                    <button type="submit" name="acao" value="iniciar_backup" class="backup">INICIAR BACKUP</button>
+
+                </div>
+                <script>
+                    function selecionarPasta() {
+                        $.ajax({
+                            type: 'POST',
+                            url: '{{ url_for("processar_acao") }}',
+                            data: { acao: 'escolher_pasta' },
+                            success: function(response) {
+                                // Atualize o valor do campoLocalSalvar após a seleção da pasta
+                                $('#campoLocalSalvar').val(response.local_selecionado);
+                            }
+                        });
+                    }
+                    </script>
+            </form>
+        </div>
+
+        <h2 class="titHist"></h2>
+        <div class="historico">
+            <table>
+                <thead>
+                    <tr class="historicoTags">
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entrada in historico %}
+                        <tr>
+                            <td>{{ entrada.ip_maquina }}</td>
+                            <td>{{ entrada.local_salvo }}</td>
+                            <td>{{ entrada.nome_arquivo }}</td>
+                            <td>{{ entrada.data }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- Adicione ao final do corpo (antes do fechamento da tag </body>) -->
+        <div id="loading-overlay">
+            <div class="loading-spinner"></div>
+                 <p>Backup em carregamento...</p>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2023 MySql Dump Online. Todos os direitos reservados.</p>
+    </footer>
+    <!-- Adicione antes do fechamento da tag </body> -->
+    <script>
+        function showLoadingOverlay() {
+            document.getElementById('loading-overlay').style.display = 'flex';
+        }
+
+        function hideLoadingOverlay() {
+           document.getElementById('loading-overlay').style.display = 'none';
+        }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $("#formBackup").submit(function(e) {
+                e.preventDefault(); // Impede a submissão automática do formulário
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url_for("processar_acao") }}',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        // Redireciona para a página de andamento do backup
+                        window.location.href = "/andamento_backup";
+                          }
+                    });
+                });
+             });
+    </script>
+</body>
+</html>

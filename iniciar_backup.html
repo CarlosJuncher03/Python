@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Backup</title>
+    <!-- Adicione qualquer estilo adicional que desejar -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #iniciar-backup-overlay {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #34495e;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        #iniciar-backup-btn {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #iniciar-backup-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div id="iniciar-backup-overlay">
+        <h1>Iniciar Backup</h1>
+        <p>Clique no botão abaixo para iniciar o backup do banco de dados.</p>
+        <button id="iniciar-backup-btn" onclick="iniciarBackup()">Iniciar Backup</button>
+    </div>
+
+    <script>
+        function iniciarBackup() {
+            // Adicione aqui qualquer lógica adicional que você queira executar ao iniciar o backup
+            // Redirecione para a página de andamento
+            window.location.href = "/andamento";
+        }
+    </script>
+</body>
+</html>

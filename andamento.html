@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backup em Andamento</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #backup-overlay {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #34495e;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        #fechar-btn {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #fechar-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+    <script>
+        function fecharPagina() {
+            window.location.href = "/";  // Redireciona para a página 'index.html'
+        }
+
+        // Adiciona um ouvinte de eventos para fechar a página quando o usuário clicar em qualquer lugar
+        document.addEventListener('click', function(event) {
+            if (event.target === document.getElementById('backup-overlay')) {
+                fecharPagina();
+            }
+        });
+    </script>
+</head>
+<body>
+    <div id="backup-overlay">
+        <h1>Backup em Andamento</h1>
+        <p>O backup do banco está em andamento...</p>
+        <button id="fechar-btn" onclick="fecharPagina()">Fechar</button>
+    </div>
+</body>
+</html>
